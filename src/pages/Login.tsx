@@ -75,7 +75,7 @@ const Login: React.FC = () => {
 	}, [token]);
 
 	return (
-		<div className='bg-dark h-screen'>
+		<div className='bg-dark h-screen font-main'>
 			<ToastContainer />
 			<TopLoadingBar
 				progress={progress}

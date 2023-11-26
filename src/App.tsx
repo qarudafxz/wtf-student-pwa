@@ -1,6 +1,13 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 import ContextProvider from "@/context/ContextProvider";
-import { GetStarted, Menu, Dashboard, Login, Signup } from "@/pages";
+import {
+	GetStarted,
+	Menu,
+	Dashboard,
+	Login,
+	Signup,
+	Notifications,
+} from "@/pages";
 
 const App = () => {
 	return (
@@ -28,6 +35,14 @@ const App = () => {
 					element={
 						<ContextProvider>
 							<Dashboard />
+						</ContextProvider>
+					}
+				/>
+				<Route
+					path='/notifications'
+					element={
+						<ContextProvider>
+							<Notifications />
 						</ContextProvider>
 					}
 				/>

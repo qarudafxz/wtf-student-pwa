@@ -3,3 +3,4 @@ export { default as Login } from "./Login";
 export { default as Signup } from "./Signup";
 export { default as GetStarted } from "./GetStarted";
 export { default as Menu } from "./Menu";
+export { default as Notifications } from "./Notifications";
