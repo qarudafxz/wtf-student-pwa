@@ -9,9 +9,10 @@ export const useGetStorage = (key: string) => {
 	};
 
 	const setItem = (token: string) => {
-		//expiration time is in 5 minutes
+		//expiration time is on 150 seconds
+
 		setToken(key, token, { path: "/" });
-		document.cookie = `${key}=${token}; path=/; max-age=300;`;
+		document.cookie = `${key}=${token}; path=/; max-age=150;`;
 	};
 
 	const removeItem = () => {
