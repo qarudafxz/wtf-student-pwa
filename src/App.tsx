@@ -1,8 +1,6 @@
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import GetStarted from "@/pages/GetStarted";
-import Menu from "@/pages/Menu";
 import ContextProvider from "@/context/ContextProvider";
-import Dashboard from "@/pages/Dashboard";
+import { GetStarted, Menu, Dashboard, Login, Signup } from "@/pages";
 
 const App = () => {
 	return (
@@ -15,6 +13,14 @@ const App = () => {
 				<Route
 					path='/menu'
 					element={<Menu />}
+				/>
+				<Route
+					path='/login'
+					element={<Login />}
+				/>
+				<Route
+					path='/register'
+					element={<Signup />}
 				/>
 				{/* If the user logs in already */}
 				<Route

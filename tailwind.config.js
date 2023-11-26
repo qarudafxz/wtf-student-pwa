@@ -17,6 +17,14 @@ export default {
 			fontFamily: {
 				main: ['"Poppins"', "sans-serif"],
 			},
+			colors: {
+				primary: "#49B0AD",
+				dark: "#0D0D0D",
+			},
+			fontColor: {
+				primary: "#49B0AD",
+				dark: "#0D0D0D",
+			},
 			backgroundColor: {
 				primary: "#49B0AD",
 				dark: "#0D0D0D",

@@ -7,12 +7,10 @@ interface ContextProviderProps {
 }
 
 const ContextProvider: React.FC<ContextProviderProps> = ({ children }) => {
-	// Destructure the result directly in the function signature
 	const { getItem } = useGetStorage("token");
 	const token = getItem();
 
-	// Use ternary operator for concise conditional rendering
-	return token ? <div>{children}</div> : <Navigate to='/' />;
+	return token ? <div>{children}</div> : <Navigate to='/login' />;
 };
 
 export default ContextProvider;

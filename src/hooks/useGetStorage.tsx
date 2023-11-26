@@ -4,15 +4,14 @@ export const useGetStorage = (key: string) => {
 	const [token, setToken] = useCookies([key]);
 
 	const getItem = () => {
-		const item = localStorage.getItem(key);
-		return item ? JSON.parse(item) : null;
+		//get the token from the cookies
+		return token[key];
 	};
 
 	const setItem = (token: string) => {
-		//add expiration date
-
+		//expiration time is in 5 minutes
 		setToken(key, token, { path: "/" });
-		document.cookie = `${key}=${token}; path=/; max-age=600;`;
+		document.cookie = `${key}=${token}; path=/; max-age=300;`;
 	};
 
 	const removeItem = () => {
