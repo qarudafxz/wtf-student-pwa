@@ -55,7 +55,7 @@ const Head: React.FC = () => {
 						{student_id}
 					</p>
 				</div>
-				<h1 className='mt-2 font-bold text-white text-xl leading-[24px]'>
+				<h1 className='mt-2 font-bold text-white text-lg leading-[24px]'>
 					Check your current balance and updates.
 				</h1>
 			</div>

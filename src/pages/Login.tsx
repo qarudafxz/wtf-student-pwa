@@ -72,7 +72,7 @@ const Login: React.FC = () => {
 			});
 			sessionStorage.clear();
 		}
-	}, []);
+	}, [token]);
 
 	return (
 		<div className='bg-dark h-screen'>
