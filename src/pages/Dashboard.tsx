@@ -3,7 +3,7 @@ import { Balance, Head, Logs, Navbar } from "@/components";
 
 const Dashboard: React.FC = () => {
 	return (
-		<div className='bg-dark h-full font-main'>
+		<div className='bg-dark h-full font-main overflow-y-auto'>
 			<Head />
 			<div className='xxxxs:p-6 xxxs:p-8 sm:p-10 md:p-12'>
 				<Balance />

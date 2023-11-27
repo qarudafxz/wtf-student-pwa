@@ -10,7 +10,7 @@ const ContextProvider: React.FC<ContextProviderProps> = ({ children }) => {
 	const { getItem } = useGetStorage("token");
 	const token = getItem();
 
-	return token ? <div>{children}</div> : <Navigate to='/login' />;
+	return token ? <div>{children}</div> : <Navigate to='/menu' />;
 };
 
 export default ContextProvider;

@@ -83,7 +83,7 @@ const Balance: React.FC = () => {
 				/>
 				<p>Remaining balance</p>
 				{!loading ? (
-					<h1 className='font-bold text-7xl'>₱{balance}</h1>
+					<h1 className='font-bold text-6xl'>₱{balance}</h1>
 				) : (
 					<Skeleton
 						variant={"rectangular"}

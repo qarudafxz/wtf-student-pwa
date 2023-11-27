@@ -7,8 +7,6 @@ const Head: React.FC = () => {
 	const student_id: string | null = sessionStorage.getItem("student_id");
 	const programID: string | null = sessionStorage.getItem("program");
 
-	console.log(programID);
-
 	const programs = [
 		{
 			program_id: 1,

@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { useGetStorage } from "@/hooks/useGetStorage";
 import TopLoadingBar from "react-top-loading-bar";
-import { useNavigate } from "react-router-dom";
+import { useNavigate, Link } from "react-router-dom";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import { IoMdArrowRoundBack } from "react-icons/io";
 
 const Login: React.FC = () => {
 	const [studentID, setStudentID] = useState("");
@@ -64,7 +65,7 @@ const Login: React.FC = () => {
 			toast.error("Session expired. Please login again.", {
 				theme: "dark",
 				position: "top-center",
-				autoClose: 3000,
+				autoClose: 1000,
 				hideProgressBar: false,
 				closeOnClick: true,
 				pauseOnHover: true,
@@ -72,7 +73,7 @@ const Login: React.FC = () => {
 			});
 			sessionStorage.clear();
 		}
-	}, [token]);
+	}, []);
 
 	return (
 		<div className='bg-dark h-screen font-main'>
@@ -84,6 +85,14 @@ const Login: React.FC = () => {
 				onLoaderFinished={() => setProgress(0)}
 			/>
 			<div className='xxxxs:p-6 xxxs:p-8 sm:p-10 md:p-12'>
+				<div className='flex justify-start'>
+					<Link to='/menu'>
+						<IoMdArrowRoundBack
+							size={25}
+							className='text-white'
+						/>
+					</Link>
+				</div>
 				<h1 className='text-center font-bold text-white'>Login</h1>
 				<div className='flex flex-col gap-4 mt-4'>
 					<input

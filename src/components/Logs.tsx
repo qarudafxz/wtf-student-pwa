@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/exhaustive-deps */
 //eslint-disable-next-line
 //@ts-nocheck
 import React, { useEffect, useState } from "react";
@@ -5,6 +6,7 @@ import { useGetStorage } from "@/hooks/useGetStorage";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import { Skeleton, SkeletonCircle } from "@chakra-ui/react";
+import { CiClock2 } from "react-icons/ci";
 
 const Logs: React.FC = () => {
 	const studentId = sessionStorage.getItem("student_id");
@@ -19,8 +21,8 @@ const Logs: React.FC = () => {
 	} as HeadersInit);
 
 	useEffect(() => {
+		setLoading(true);
 		const getLogs = async () => {
-			setLoading(true);
 			try {
 				await fetch(`http://localhost:8000/api/logs/${studentId}`, {
 					method: "GET",
@@ -41,8 +43,11 @@ const Logs: React.FC = () => {
 						});
 						return;
 					}
-					setLoading(true);
+					console.log(data);
 					setPayments(data.payments);
+					setTimeout(() => {
+						setLoading(false);
+					}, 1500);
 				});
 				await fetch("");
 			} catch (err) {
@@ -52,43 +57,88 @@ const Logs: React.FC = () => {
 
 		getLogs();
 	}, []);
+
 	return (
-		<div className='font-main relative bottom-10 bg-dark h-full'>
+		<div className='font-main h-screen relative bottom-10 bg-dark'>
 			<ToastContainer />
 			<div className='flex flex-col gap-2'>
-				<div className='flex justify-between items-center'>
-					<h1 className='font-bold text-white text-xl mb-4'>Logs</h1>
+				<div className='flex justify-between items-center my-4'>
+					<h1 className='font-bold text-white text-xl'>Logs</h1>
+					<button className='font-bold text-zinc-500 bg-zinc-800 border border-zinc-500 px-2 py-1 rounded-md'>
+						Pay with Gcash
+					</button>
 				</div>
-				<div className='max-h-[150px] overflow-auto flex flex-col gap-5'>
+				<div className='w-full flex flex-col gap-5'>
 					{payments?.map((payment, idx) => {
 						return (
 							<div
 								key={idx}
-								className='grid grid-cols-7'>
+								className='flex gap-4 items-center'>
 								{loading ? (
-									<SkeletonCircle
-										size='70'
-										startColor='#4FD1C5'
-										endColor='#63B3ED'
-										className='rounded-full'
-									/>
+									<>
+										<SkeletonCircle
+											size='60'
+											startColor='#272727'
+											endColor='#1F1F1F'
+											className='rounded-full'
+										/>
+										<Skeleton
+											height='55px'
+											width='220px'
+											startColor='#272727'
+											endColor='#1F1F1F'
+										/>
+									</>
 								) : (
-									<div className='col-span-2 flex flex-col bg-primary rounded-full text-center py-5'>
-										<h1 className='text-black font-bold text-[9px]'>
-											{new Date(payment?.date as string).toLocaleDateString("en-US", {
-												month: "short",
-												year: "numeric",
-											})}
-										</h1>
-										<h1 className='font-extrabold text-3xl'>
-											{" "}
-											{new Date(payment?.date as string).toLocaleDateString("en-US", {
-												day: "numeric",
-											})}
-										</h1>
+									<div
+										className={`border-t border-zinc-500 flex flex-row w-full gap-4 ${
+											idx % 2 === 0 && "bg-zinc-950"
+										}`}>
+										{/* Circular */}
+										<div className='bg-primary text-black font-bold font-main rounded-full px-2 flex flex-col items-center place-content-center place-items-center'>
+											<h1 className='text-xs'>
+												{new Date(payment?.date).toLocaleDateString("en-US", {
+													month: "short",
+													year: "numeric",
+												})}
+											</h1>
+											<h1 className='font-extrabold text-xl text-center'>
+												{new Date(payment?.date).toLocaleString("en-US", {
+													day: "2-digit",
+												})}
+											</h1>
+										</div>
+										{/* content */}
+										<div className='flex justify-between items-center'>
+											<div className='flex flex-col justify-start items-start '>
+												<h1 className='text-primary font-extrabold text-3xl'>
+													PHP{payment?.amount}
+												</h1>
+												<p className='text-white text-xs flex items-center'>
+													Collected by{" "}
+													{payment?.collector?.first_name +
+														" " +
+														payment?.collector?.last_name +
+														" "}
+												</p>
+												<p className='text-[14px] text-zinc-400 flex items-center gap-2'>
+													<CiClock2
+														className='text-primary bg-zinc-800 rounded-md p-2'
+														size={35}
+													/>
+													{/* Format the time, only the time, remove the date */}
+													{new Date(payment?.created_at).toLocaleTimeString("en-US", {
+														hour: "2-digit",
+														minute: "2-digit",
+														second: "2-digit",
+														hour12: true,
+													})}
+												</p>
+											</div>
+											<div className='flex flex-col justify-end items-end'></div>
+										</div>
 									</div>
 								)}
-								<div className='col-span-5 flex justify-between items-center'></div>
 							</div>
 						);
 					})}
