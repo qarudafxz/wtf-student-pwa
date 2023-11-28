@@ -45,7 +45,7 @@ const Logs: React.FC = () => {
 						return;
 					}
 					console.log(data);
-					setPayments(data.payments);
+					setPayments(data.payments?.reverse());
 					setTimeout(() => {
 						setLoading(false);
 					}, 1500);
@@ -71,7 +71,7 @@ const Logs: React.FC = () => {
 						Pay with Gcash
 					</Link>
 				</div>
-				<div className='w-full flex flex-col gap-5'>
+				<div className='w-full flex flex-col gap-10'>
 					{payments?.map((payment, idx) => {
 						return (
 							<div
@@ -99,7 +99,7 @@ const Logs: React.FC = () => {
 										}`}>
 										{/* Circular */}
 										<div className='bg-primary text-black font-bold font-main rounded-full px-2 flex flex-col items-center place-content-center place-items-center'>
-											<h1 className='text-xs'>
+											<h1 className='text-xs text-center'>
 												{new Date(payment?.date).toLocaleDateString("en-US", {
 													month: "short",
 													year: "numeric",
@@ -117,13 +117,17 @@ const Logs: React.FC = () => {
 												<h1 className='text-primary font-extrabold text-3xl'>
 													PHP{payment?.amount}
 												</h1>
-												<p className='text-white text-xs flex items-center'>
-													Collected by{" "}
-													{payment?.collector?.first_name +
-														" " +
-														payment?.collector?.last_name +
-														" "}
-												</p>
+												{!payment?.collector?.first_name ||
+												!payment?.collector?.last_name ? (
+													<p className='text-white text-xs flex items-center'>
+														Paid via Gcash
+													</p>
+												) : (
+													<p className='text-white text-xs flex items-center'>
+														Collected by {payment?.collector?.first_name}{" "}
+														{payment?.collector?.last_name}
+													</p>
+												)}
 												<p className='text-[14px] text-zinc-400 flex items-center gap-2'>
 													<CiClock2
 														className='text-primary bg-zinc-800 rounded-md p-2'
@@ -138,7 +142,15 @@ const Logs: React.FC = () => {
 													})}
 												</p>
 											</div>
-											<div className='flex flex-col justify-end items-end'></div>
+											<div className='flex flex-col justify-end items-end ml-4'>
+												<p className='text-zinc-400 font-bold text-end'>{payment?.ar_no}</p>
+												<p
+													className={`text-xs bg-zinc-700 border border-zinc-400 px-2 py-1 rounded-md ${
+														payment?.desc === "partial" ? "text-yellow-400" : "text-green-500"
+													}`}>
+													{payment.desc}
+												</p>
+											</div>
 										</div>
 									</div>
 								)}

@@ -45,11 +45,11 @@ const Head: React.FC = () => {
 							alt={name || "Icon"}
 							className='w-10 h-10'
 						/>
-						<h1 className='font-bold text-xl text-white leading-[26px] flex flex-col'>
+						<h1 className='font-bold text-md text-white leading-[26px] flex flex-col'>
 							{name} <span className='text-sm font-normal'>{program}</span>
 						</h1>
 					</div>
-					<p className='text-primary font-bold bg-zinc-800 px-3 py-1 rounded-full border border-zinc-400 text-md'>
+					<p className='text-primary font-bold bg-zinc-800 px-3 py-1 rounded-full border border-zinc-400 text-sm'>
 						{student_id}
 					</p>
 				</div>
