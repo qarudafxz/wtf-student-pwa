@@ -2,6 +2,7 @@
 //eslint-disable-next-line
 //@ts-nocheck
 import React, { useEffect, useState } from "react";
+import { Link } from "react-router-dom";
 import { useGetStorage } from "@/hooks/useGetStorage";
 import { toast, ToastContainer } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
@@ -64,9 +65,11 @@ const Logs: React.FC = () => {
 			<div className='flex flex-col gap-2'>
 				<div className='flex justify-between items-center my-4'>
 					<h1 className='font-bold text-white text-xl'>Logs</h1>
-					<button className='font-bold text-zinc-500 bg-zinc-800 border border-zinc-500 px-2 py-1 rounded-md'>
+					<Link
+						to='/pay'
+						className='font-bold text-zinc-500 bg-zinc-800 border border-zinc-500 px-2 py-1 rounded-md'>
 						Pay with Gcash
-					</button>
+					</Link>
 				</div>
 				<div className='w-full flex flex-col gap-5'>
 					{payments?.map((payment, idx) => {

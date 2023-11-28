@@ -8,6 +8,7 @@ import {
 	Signup,
 	Notifications,
 } from "@/pages";
+import PayViaGcash from "./components/PayViaGcash";
 
 const App = () => {
 	return (
@@ -35,6 +36,14 @@ const App = () => {
 					element={
 						<ContextProvider>
 							<Dashboard />
+						</ContextProvider>
+					}
+				/>
+				<Route
+					path='/pay'
+					element={
+						<ContextProvider>
+							<PayViaGcash />
 						</ContextProvider>
 					}
 				/>
