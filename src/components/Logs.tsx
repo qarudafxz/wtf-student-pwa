@@ -44,7 +44,7 @@ const Logs: React.FC = () => {
 						});
 						return;
 					}
-					console.log(data);
+
 					setPayments(data.payments?.reverse());
 					setTimeout(() => {
 						setLoading(false);

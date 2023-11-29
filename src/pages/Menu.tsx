@@ -33,6 +33,12 @@ const Menu: React.FC = () => {
 							Register{" "}
 						</Link>
 					</div>
+					<p className='text-white mt-8 fixed bottom-10'>
+						CCISLSG Extension{" "}
+						{new Date().toLocaleDateString("en-US", {
+							year: "numeric",
+						})}
+					</p>
 				</div>
 			</div>
 		</div>
