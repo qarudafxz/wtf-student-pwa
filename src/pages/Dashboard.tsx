@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState, useEffect } from "react";
 import Pusher from "pusher-js";
 import axios from "axios";
@@ -32,10 +33,19 @@ const Dashboard: React.FC = () => {
 				});
 
 				// Bind the event
-				channel.bind("client-receipt-received", (data: Notification) => {
+				channel.bind("client-receipt-received", (data: any) => {
+					const key = "id" as any;
 					// Update state with the new notification
-					console.log(data);
-					setNotifications((prevNotifications) => [data, ...prevNotifications]);
+					setNotifications((prevNotifications) => [
+						...new Map(
+							[data, ...prevNotifications].map((item) => [
+								//eslint-disable-next-line
+								//@ts-nocheck
+								item[key] as any,
+								item,
+							])
+						).values(),
+					]);
 				});
 			} catch (error) {
 				console.error("Pusher authentication error:", error);
@@ -51,6 +61,7 @@ const Dashboard: React.FC = () => {
 	useEffect(() => {
 		initializePusher();
 	}, [student_id]);
+
 	return (
 		<div className='bg-dark h-full font-main overflow-y-auto'>
 			<Head />
