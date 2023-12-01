@@ -1,4 +1,5 @@
 import React, { useState } from "react";
+import Head from "@/components/Head";
 import { useGetStorage } from "@/hooks/useGetStorage";
 import { Navbar } from ".";
 
@@ -31,8 +32,9 @@ const PayViaGcash: React.FC = () => {
 
 	return (
 		<div className='font-main h-screen bg-dark'>
+			<Head />
 			<div className='xxxxs:p-6 xxxs:p-8 sm:p-10 md:p-12'>
-				<h1 className='font-bold text-white text-4xl'>Pay Via Gcash</h1>
+				<h1 className='font-bold text-white text-4xl'>Pay via Gcash</h1>
 				<input
 					type='text'
 					onChange={(e) => setAmount(e.target.value)}
@@ -41,7 +43,7 @@ const PayViaGcash: React.FC = () => {
 				/>
 				<button
 					onClick={pay}
-					className='bg-primary text-center py-2 rounded-md font-bold w-full'>
+					className='bg-primary text-center py-2 rounded-md font-bold w-full mt-4'>
 					Pay
 				</button>
 			</div>
