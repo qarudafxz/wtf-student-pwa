@@ -1,12 +1,12 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import React, { useState, useEffect, useRef } from "react";
+import React, { useState, useEffect } from "react";
 import { NavLink } from "react-router-dom";
 import { BsFillGrid1X2Fill } from "react-icons/bs";
 import { FaBell } from "react-icons/fa";
 import { IoExitOutline } from "react-icons/io5";
 import { useGetStorage } from "@/hooks/useGetStorage";
 import TopLoadingBar from "react-top-loading-bar";
-import notif_bell from "@/assets/yawa_notif.mp3";
+import notif_bell from "@/assets/notif-bell.mp3";
 
 const Navbar: React.FC<{ notifications?: any }> = ({ notifications }) => {
 	const [progress, setProgress] = useState(0);
