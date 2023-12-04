@@ -126,6 +126,35 @@ const Notifications: React.FC = () => {
 	const [isView, setIsView] = useState(false);
 	const [selectedReceipt, setSelectedReceipt] = useState<any>("");
 
+	const fetchNotificationsFromDb = async () => {
+		const headers = new Headers({
+			Authorization: `Bearer ${token}`,
+		} as HeadersInit);
+		try {
+			const res = await fetch(
+				`http://localhost:8000/api/notifications/${student_id}`,
+				{
+					method: "GET",
+					headers,
+				}
+			);
+			const data = await res.json();
+
+			setNotifFromDb(data?.notifications);
+		} catch (err) {
+			console.log(err);
+		}
+	};
+
+	const deleteAllNotifications = async () => {
+		try {
+			await axios.delete(`http://localhost:8000/api/notifications/${student_id}`);
+			fetchNotificationsFromDb();
+		} catch (err) {
+			console.log(err);
+		}
+	};
+
 	const initializePusher = async () => {
 		const pusher = new Pusher("7c7a03a437d59fe674fe", {
 			cluster: "ap1",
@@ -161,6 +190,8 @@ const Notifications: React.FC = () => {
 							])
 						).values(),
 					]);
+
+					fetchNotificationsFromDb();
 				});
 			} catch (error) {
 				console.error("Pusher authentication error:", error);
@@ -170,35 +201,6 @@ const Notifications: React.FC = () => {
 		return () => {
 			pusher.disconnect();
 		};
-	};
-
-	const fetchNotificationsFromDb = async () => {
-		const headers = new Headers({
-			Authorization: `Bearer ${token}`,
-		} as HeadersInit);
-		try {
-			const res = await fetch(
-				`http://localhost:8000/api/notifications/${student_id}`,
-				{
-					method: "GET",
-					headers,
-				}
-			);
-			const data = await res.json();
-
-			setNotifFromDb(data?.notifications);
-		} catch (err) {
-			console.log(err);
-		}
-	};
-
-	const deleteAllNotifications = async () => {
-		try {
-			await axios.delete(`http://localhost:8000/api/notifications/${student_id}`);
-			fetchNotificationsFromDb();
-		} catch (err) {
-			console.log(err);
-		}
 	};
 
 	useEffect(() => {
@@ -220,24 +222,6 @@ const Notifications: React.FC = () => {
 					</button>
 				</div>
 				<div className='max-h-[450px] overflow-y-auto custom'>
-					{notifications?.length > 0 &&
-						notifications?.map((notif, idx) => {
-							return (
-								<button
-									onClick={() => {
-										setIsView(true);
-										setSelectedReceipt(notif?.receipt);
-									}}
-									key={idx}
-									className='w-full py-2 border-t border-zinc-600 flex items-center gap-4'>
-									<img
-										src={ccislsg}
-										alt='CCISLSG Logo'
-										className='w-16 h-16 p-3 rounded-full bg-primary'
-									/>
-								</button>
-							);
-						})}
 					{notifFromDb?.length > 0 &&
 						notifFromDb?.map((notif, idx) => {
 							return (
