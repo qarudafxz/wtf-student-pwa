@@ -161,16 +161,6 @@ const Notifications: React.FC = () => {
 							])
 						).values(),
 					]);
-					setNotifFromDb((prevNotifications) => [
-						...new Map(
-							[data, ...prevNotifications].map((item) => [
-								//eslint-disable-next-line
-								//@ts-nocheck
-								item[key] as any,
-								item,
-							])
-						).values(),
-					]);
 				});
 			} catch (error) {
 				console.error("Pusher authentication error:", error);
@@ -217,10 +207,7 @@ const Notifications: React.FC = () => {
 	}, [student_id]);
 
 	return (
-		<div
-			className={`bg-dark font-main pb-14 ${
-				notifFromDb?.length > 0 || notifications?.length > 0 ? "h-full" : "h-screen"
-			}`}>
+		<div className={`bg-dark font-main pb-14 h-screen`}>
 			<Head />
 			<div className='xxxxs:p-6 xxxs:p-8 sm:p-10 md:p-16'>
 				<div className='flex justify-between items-center pb-4'>
@@ -232,52 +219,66 @@ const Notifications: React.FC = () => {
 						/>
 					</button>
 				</div>
-				{notifications?.length > 0 &&
-					notifications?.map((notif, idx) => {
-						return (
-							<button
-								onClick={() => {
-									setIsView(true);
-									setSelectedReceipt(notif?.receipt);
-								}}
-								key={idx}
-								className='w-full py-2 border-t border-zinc-600 flex items-center gap-4'>
-								<img
-									src={ccislsg}
-									alt='CCISLSG Logo'
-									className='w-16 h-16 p-3 rounded-full bg-primary'
-								/>
-							</button>
-						);
-					})}
-				{notifFromDb?.length > 0 &&
-					notifFromDb?.map((notif, idx) => {
-						return (
-							<button
-								onClick={() => {
-									setIsView(true);
-									setSelectedReceipt(notif?.receipt);
-								}}
-								key={idx}
-								className='w-full py-2 border-t border-zinc-600 flex items-center gap-4'>
-								<img
-									src={ccislsg}
-									alt='CCISLSG Logo'
-									className='w-16 h-16 p-3 rounded-full bg-primary'
-								/>
-								<div className='flex flex-col justify-start items-start place-items-start w-full'>
-									<h1 className='font-bold text-white text-lg'>CCISLSG</h1>
-									<div className='flex items-center w-full text-left justify-between'>
-										<p className='text-zinc-400'>{notif?.note}</p>
-										<HiOutlineDotsHorizontal
-											size={15}
-											className='text-primary'
-										/>
+				<div className='max-h-[450px] overflow-y-auto custom'>
+					{notifications?.length > 0 &&
+						notifications?.map((notif, idx) => {
+							return (
+								<button
+									onClick={() => {
+										setIsView(true);
+										setSelectedReceipt(notif?.receipt);
+									}}
+									key={idx}
+									className='w-full py-2 border-t border-zinc-600 flex items-center gap-4'>
+									<img
+										src={ccislsg}
+										alt='CCISLSG Logo'
+										className='w-16 h-16 p-3 rounded-full bg-primary'
+									/>
+								</button>
+							);
+						})}
+					{notifFromDb?.length > 0 &&
+						notifFromDb?.map((notif, idx) => {
+							return (
+								<button
+									onClick={() => {
+										setIsView(true);
+										setSelectedReceipt(notif?.receipt);
+									}}
+									key={idx}
+									className='w-full py-2 border-t border-zinc-600 flex items-center gap-4'>
+									<img
+										src={ccislsg}
+										alt='CCISLSG Logo'
+										className='w-16 h-16 p-3 rounded-full bg-primary'
+									/>
+									<div className='flex flex-col justify-start items-start place-items-start w-full'>
+										<h1 className='font-bold text-white text-lg'>CCISLSG</h1>
+										<div className='flex items-center w-full text-left justify-between'>
+											<div className='flex flex-col'>
+												<p className='text-zinc-400'>{notif?.note}</p>
+												<p className='text-xs text-zinc-500'>
+													{new Date(notif?.created_at).toLocaleDateString("en-US", {
+														month: "long",
+														day: "numeric",
+														year: "numeric",
+														hour: "numeric",
+														minute: "numeric",
+														hour12: true,
+													})}
+												</p>
+											</div>
+											<HiOutlineDotsHorizontal
+												size={15}
+												className='text-primary'
+											/>
+										</div>
 									</div>
-								</div>
-							</button>
-						);
-					})}
+								</button>
+							);
+						})}
+				</div>
 			</div>
 			<Receipt
 				isView={isView}

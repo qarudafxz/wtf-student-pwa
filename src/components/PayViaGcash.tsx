@@ -2,6 +2,8 @@ import React, { useState } from "react";
 import Head from "@/components/Head";
 import { useGetStorage } from "@/hooks/useGetStorage";
 import { Navbar } from ".";
+import { toast, ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 const PayViaGcash: React.FC = () => {
 	const student_id = sessionStorage.getItem("student_id");
@@ -21,6 +23,18 @@ const PayViaGcash: React.FC = () => {
 			}).then(async (res) => {
 				const data = await res.json();
 
+				if (!res.ok || res.status === 422) {
+					toast.error(data.message, {
+						theme: "dark",
+						position: "top-center",
+						autoClose: 3000,
+						hideProgressBar: false,
+						closeOnClick: true,
+						pauseOnHover: true,
+						draggable: true,
+					});
+					return;
+				}
 				if (data.checkout_url) {
 					window.location.href = data.checkout_url;
 				}
@@ -33,6 +47,7 @@ const PayViaGcash: React.FC = () => {
 	return (
 		<div className='font-main h-screen bg-dark'>
 			<Head />
+			<ToastContainer />
 			<div className='xxxxs:p-6 xxxs:p-8 sm:p-10 md:p-12'>
 				<h1 className='font-bold text-white text-4xl'>Pay via Gcash</h1>
 				<input
