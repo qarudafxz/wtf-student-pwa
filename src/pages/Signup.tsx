@@ -10,8 +10,8 @@ const Signup: React.FC = () => {
 	const [firstName, setFirstName] = useState("");
 	const [lastName, setLastName] = useState("");
 	const [email, setEmail] = useState("");
-	const [program, setProgram] = useState("");
-	const [year, setYear] = useState("");
+	const [program, setProgram] = useState("BSIT");
+	const [year, setYear] = useState("First Year");
 	const [password, setPassword] = useState("");
 
 	const handleRegister = async (e: any) => {
@@ -21,7 +21,14 @@ const Signup: React.FC = () => {
 			first_name: firstName,
 			last_name: lastName,
 			email,
-			program_id: program === "BSIT" ? 1 : program === "BSIS" ? 2 : 3,
+			program_id:
+				program === "BSIT"
+					? 1
+					: program === "BSIS"
+					? 2
+					: program === "BSCS"
+					? 3
+					: null,
 			year_level_code:
 				year === "First Year"
 					? 1
@@ -29,11 +36,14 @@ const Signup: React.FC = () => {
 					? 2
 					: year === "Third Year"
 					? 3
-					: 4,
+					: year === "Fourth Year"
+					? 4
+					: null,
 			password,
 		};
-
 		try {
+			console.log(payload.program_id);
+			console.log(payload.year_level_code);
 			console.log(payload);
 
 			Object.keys(payload).forEach((key) => {
@@ -53,23 +63,25 @@ const Signup: React.FC = () => {
 				);
 			}
 
-			await fetch("http://127.0.0.1:8000/api/auth/register", {
-				method: "POST",
-				headers: {
-					"Content-Type": "application/json",
-				} as HeadersInit,
-				body: JSON.stringify(payload),
-			}).then(async (res) => {
-				const data = await res.json();
+			console.log(payload);
 
-				if (!res.ok) {
-					alert(data.message);
-					return;
-				}
+			// await fetch("http://127.0.0.1:8000/api/auth/register", {
+			// 	method: "POST",
+			// 	headers: {
+			// 		"Content-Type": "application/json",
+			// 	} as HeadersInit,
+			// 	body: JSON.stringify(payload),
+			// }).then(async (res) => {
+			// 	const data = await res.json();
 
-				alert(data.message);
-				window.location.href = "/login";
-			});
+			// 	if (!res.ok) {
+			// 		alert(data.message);
+			// 		return;
+			// 	}
+
+			// 	alert(data.message);
+			// 	window.location.href = "/login";
+			// });
 		} catch (err) {
 			console.log(err);
 		}
